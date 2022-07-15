@@ -28,4 +28,8 @@ public class Task {
         split[3] = String.valueOf(userID);
         split[4] = String.valueOf(deadline);
     }
+
+    public String info(){
+        return (id+ " , " + header + " , " + body + " , "+ userID + " , "+ deadline+ " , "+ status);
+    }
 }

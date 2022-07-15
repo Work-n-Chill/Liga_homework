@@ -1,6 +1,7 @@
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,60 +16,52 @@ import java.util.stream.Collectors;
 @Getter
 public class FileLoader {
 
-    private final Path usersPath = Paths.get("users.csv");
-    private final Path tasksPath = Paths.get("tasks.csv");
+    private final Path usersPath = Paths.get("D:\\Загрузки\\Task tracker\\src\\users.csv");
+    private final Path tasksPath = Paths.get("D:\\Загрузки\\Task tracker\\src\\tasks.csv");
 
     private List<User> usersStore = new ArrayList<>();
     private List<Task> tasksStore = new ArrayList<>();
 
     public FileLoader() {
-        load(usersPath, usersStore);
-        load(tasksPath, tasksStore);
+        load(usersPath, usersStore, true);
+        load(tasksPath, tasksStore, false);
     }
 
-    private void load(Path storePath, List store) {
-        try {
-            if (Files.exists(storePath) && Files.isReadable(storePath)) {
-                List<String> o = new ArrayList<>();
-                for (String s : Files.readString(storePath, StandardCharsets.UTF_8).split(", ")) {
-                    String valueOf = String.valueOf(s);
-                    o.add(valueOf);
+    private void load(Path storePath, List store, boolean user) {
+
+        try (BufferedReader br = Files.newBufferedReader(storePath)) {
+            String DELIMITER = ", ";
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(DELIMITER);
+                if (user){
+                    store.add(new User(parts));
+                } else {
+                    store.add(new Task(parts));
                 }
-                store = o;
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
-    public void flush(Path storePath, List store) {
-        try {
-            Files.writeString(
-                    storePath,
-                    represent(store)
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void represent(List<Task> store) {
+        for (Task o: store){
+            System.out.println(o.info());
         }
     }
 
-    public String represent(List store) {
-        return (String) store.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(", "));
-    }
 
 
-    public void addTask(String data, List store) {
-        store.add(new Task(data.split(", ")));
+
+    public void addTask(String[] data, List store) {
+        store.add(new Task(data));
     }
-    public void addUser(String data, List store) {
-        store.add(new User(data.split(", ")));
+    public void addUser(String[] data, List store) {
+        store.add(new User(data));
     }
-/*
-    public void remove(int num) {
-        store.remove(num);
-    }
-*/
+
 
 }

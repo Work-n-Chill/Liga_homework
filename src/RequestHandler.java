@@ -11,16 +11,18 @@ public class RequestHandler {
 
     private void run() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println(" You can use these commands: print+id, printf+id+status, chstatus+id+newStatus");
         while (scanner.hasNext()) {
             String line = scanner.nextLine();
-            String[] request = line.split(", ");
-            switch (request[0]){
-                case "print":
-                    printTasks(Integer.parseInt(request[1]));
-                case "printf":
-                    printFilteredTasks(Integer.parseInt(request[1]), request[2]);
-                case "chstatus":
-                    changeStatus(Integer.parseInt(request[1]), request[2]);
+            String[] request = line.split(" ");
+            if (request[0].equals("printf")) {
+                printFilteredTasks(line);
+            } else if (request[0].equals("print")) {
+                printTasks(line);
+            } else if (request[0].equals("chstatus")) {
+                changeStatus(line);
+            } else {
+                System.out.printf("it works, but wrong");
             }
         }
         scanner.close();
@@ -28,35 +30,39 @@ public class RequestHandler {
 
 
 
-    public void printTasks(int userId){
+    public void printTasks(String line){
+        String[] request = line.split(" ");
         FileLoader data = data();
         List<Task> tasks = new ArrayList<>();
         for (Task task:data.getTasksStore()) {
-            if (task.getUserID() == userId) {
-                tasks.add(task);
+            if (task.getUserID() == Integer.parseInt(request[1])) {
+                System.out.println(task.info());
+                //tasks.add(task);
 
             }
         }
-        System.out.println(data.represent(tasks));
+        //data.represent(tasks);
     }
 
-    public void printFilteredTasks(int userId, String filter){
+    public void printFilteredTasks(String line){
+        String[] request = line.split(" ");
         FileLoader data = data();
         List<Task> tasks = new ArrayList<>();
         for (Task task:data.getTasksStore()) {
-            if (task.getUserID() == userId) {
-                if (task.getStatus().equals(filter))
+            if (task.getUserID() == Integer.parseInt(request[1])) {
+                if (task.getStatus().equals(request[2]))
                     tasks.add(task);
             }
         }
-        System.out.println(data.represent(tasks));
+        data.represent(tasks);
     }
 
-    public void changeStatus(int taskId, String newStatus) {
+    public void changeStatus(String line) {
+        String[] request = line.split(" ");
         FileLoader data = data();
         for (Task task:data.getTasksStore()) {
-            if (task.getId() == taskId) {
-                task.setStatus(newStatus);
+            if (task.getId() == Integer.parseInt(request[1])) {
+                task.setStatus(request[2]);
             }
         }
     }

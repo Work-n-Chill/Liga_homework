@@ -14,4 +14,7 @@ public class User {
         split[0] = String.valueOf(id);
         split[1] = name;
     }
+    public String info(){
+        return (id+ " , " + name);
+    }
 }
