@@ -9,10 +9,10 @@ public class Task {
     private String header;
     private String body;
     private int userID;
-    private Date deadline;
+    private String deadline;
     private String status;
 
-    public Task(int id, String header, String body,int userID, Date deadline) {
+    public Task(int id, String header, String body,int userID, String deadline) {
         this.id = id;
         this.header = header;
         this.body = body;
@@ -22,11 +22,12 @@ public class Task {
     }
 
     public Task(String[] split) {
-        split[0] = String.valueOf(id);
-        split[1] = header;
-        split[2] = body;
-        split[3] = String.valueOf(userID);
-        split[4] = String.valueOf(deadline);
+        id = Integer.parseInt(split[0]);
+        header = split[1];
+        body = split[2];
+        userID = Integer.parseInt(split[3]);
+        deadline = split[4];
+        status = "новая";
     }
 
     public String info(){

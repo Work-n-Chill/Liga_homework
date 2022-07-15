@@ -11,8 +11,8 @@ public class User {
     private List<Task> tasks;
 
     public User(String[] split) {
-        split[0] = String.valueOf(id);
-        split[1] = name;
+        id = Integer.parseInt(split[0]);
+        name = split[1];
     }
     public String info(){
         return (id+ " , " + name);

@@ -19,8 +19,8 @@ public class FileLoader {
     private final Path usersPath = Paths.get("D:\\Загрузки\\Task tracker\\src\\users.csv");
     private final Path tasksPath = Paths.get("D:\\Загрузки\\Task tracker\\src\\tasks.csv");
 
-    private List<User> usersStore = new ArrayList<>();
-    private List<Task> tasksStore = new ArrayList<>();
+    private volatile List<User> usersStore = new ArrayList<>();
+    private volatile List<Task> tasksStore = new ArrayList<>();
 
     public FileLoader() {
         load(usersPath, usersStore, true);
@@ -46,6 +46,7 @@ public class FileLoader {
         }
 
     }
+
 
     public void represent(List<Task> store) {
         for (Task o: store){
