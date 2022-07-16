@@ -14,7 +14,9 @@ public class User {
         id = Integer.parseInt(split[0]);
         name = split[1];
     }
-    public String info(){
-        return (id+ " , " + name);
+
+    @Override
+    public String toString() {
+        return (id+ ", " + name);
     }
 }

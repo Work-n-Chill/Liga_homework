@@ -1,30 +1,15 @@
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-@Setter
-@Getter
 public class FileLoader {
 
-    private final Path usersPath = Paths.get("D:\\Загрузки\\Task tracker\\src\\users.csv");
-    private final Path tasksPath = Paths.get("D:\\Загрузки\\Task tracker\\src\\tasks.csv");
-
-    private volatile List<User> usersStore = new ArrayList<>();
-    private volatile List<Task> tasksStore = new ArrayList<>();
-
     public FileLoader() {
-        load(usersPath, usersStore, true);
-        load(tasksPath, tasksStore, false);
+        load(Data.getInstance().getUsersPath(), Data.getInstance().getUsersStore(), true);
+        load(Data.getInstance().getTasksPath(), Data.getInstance().getTasksStore(), false);
     }
 
     private void load(Path storePath, List store, boolean user) {
@@ -50,19 +35,11 @@ public class FileLoader {
 
     public void represent(List<Task> store) {
         for (Task o: store){
-            System.out.println(o.info());
+            System.out.println(o.toString());
         }
     }
 
 
-
-
-    public void addTask(String[] data, List store) {
-        store.add(new Task(data));
-    }
-    public void addUser(String[] data, List store) {
-        store.add(new User(data));
-    }
 
 
 }
