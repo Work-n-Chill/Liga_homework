@@ -1,3 +1,5 @@
+package data;
+
 import lombok.*;
 import java.util.*;
 

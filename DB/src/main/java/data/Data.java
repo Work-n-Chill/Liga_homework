@@ -1,6 +1,7 @@
+package data;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Singular;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

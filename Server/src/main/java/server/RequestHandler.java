@@ -1,6 +1,8 @@
+package server;
 
-import java.util.ArrayList;
-import java.util.List;
+import data.*;
+
+
 import java.util.Scanner;
 
 public class RequestHandler {
@@ -46,7 +48,7 @@ public class RequestHandler {
     public void printTasks(String line){
         String[] request = line.split(" ");
         Data data = Data.getInstance();
-        //List<Task> tasks = new ArrayList<>();
+        //List<data.Task> tasks = new ArrayList<>();
         if (request[1].equals("all")) {
             for (Task task:data.getTasksStore()) {
                 if (task.getUserID() == Integer.parseInt(request[2])) {

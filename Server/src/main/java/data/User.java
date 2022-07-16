@@ -1,6 +1,9 @@
-import lombok.*;
-import java.util.*;
+package data;
 
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
